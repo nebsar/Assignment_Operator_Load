@@ -37,6 +37,8 @@ public:
 
     Test& operator=(Test &rhs) { /*assignment operator overloading for same 
                                   * type of classes
+                                  * If you remove & from the return Test& (Test)
+                                  * assignment operator gives different result
                                   */
         if (this != &rhs)
             *m_x = *rhs.m_x;
@@ -50,17 +52,30 @@ public:
         return *this;
     }
 
+    Test(Test &orig) { /* copy constructor */
+        m_x = new int(*orig.m_x);
+    }
+
 };
 
 int main() {
 
-    Test t1 = 10;
-    t1.print();
+    Test t1(10);
+    // t1.print();
 
-    Base b = 20;
+    Test t2, t3;
 
-    t1 = b;
+    Base b(20);
+
+    //t1 = b;
+    // t1.print();
+
+    (t2 = t3) = t1;
+
     t1.print();
+    t2.print();
+    t3.print();
+
 
     return 0;
 }
